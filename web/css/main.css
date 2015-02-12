@@ -1,34 +1,19 @@
 html{
-    background: darkgray url(/images/loading.png) repeat;
+    background: black url(/images/loading.png) repeat;
 }
 
 body {
-    margin:0px;
+
+    background:url(/images/background.jpg) #000000 no-repeat 50% 50%;
+    background-attachment: fixed;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    background-size: contain;
 }
 
-#bg {
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    /*z-index: 10;*/
-}
-#bg img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    min-width: 50%;
-    min-height: 50%;
-}
-div.content{
-    position: fixed;
-    top:0;
-    left:0;
-    width: 100%;
+html, body{
+    padding: 0;
+    margin:0;
     height: 100%;
 }
 
