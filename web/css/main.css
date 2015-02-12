@@ -1,0 +1,59 @@
+body {
+    background-color: wheat;
+    margin:0px;
+    background: darkgray url('/images/loading.png') repeat;
+}
+
+
+article {
+    width: auto;
+    overflow-y: auto !important;
+}
+
+.blogPanel {
+    background-color: grey;
+    width: auto;
+}
+
+.rightPanel {
+    float: right;
+    display: none;
+    width: 200px;
+}
+
+.sitePanel, .userPanel {/app/example/app/example
+    min-height: 200px;
+    background-color: white;
+    display: block;
+}
+
+.serverPanel {
+    background-color: darkgreen;
+    min-height: 200px;
+}
+
+.stickyTop{
+    display: none;
+    width: 100%;
+    padding: 2px 0px 2px 0px;
+    color: white;
+
+    background-color: black;
+    font-family: ‘Metrophobic’, Arial, serif; font-weight: 400;
+    font-size: 22px;
+    line-height: 23px;
+    vertical-align: middle;
+    text-align: right;
+}
+
+@media screen and (min-width: 800px) {
+    .rightPanel{
+        display: block;
+    }
+}
+
+@media screen and (min-width: 480px) {
+    .stickyTop{
+        display: block;
+    }
+}

@@ -1,0 +1,12 @@
+{% extends 'styled.html.twig' %}
+
+{% block topPanel %}
+    {% embed 'parts/topLoginPanel.twig' %}
+    {% endembed %}
+{% endblock %}
+
+
+{% block body %}
+    {% embed "parts/body.html.twig" %}
+    {% endembed %}
+{% endblock %}
