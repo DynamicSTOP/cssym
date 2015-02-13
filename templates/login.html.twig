@@ -10,7 +10,7 @@
 
 {% block body %}
     <div class="loginBlock">
-        <div class="loginInfoBlock">
+        <div class="loginInfoBlock greyOpacity">
             <div>
                 <form action="/login" method="post">
                     <input type="image" src="images/sits_large_border.png" type="submit">
@@ -28,12 +28,12 @@
 
                             <li>
                                 Убедитесь что сертификат не был подменён<br />
-                                <a href="/images/secure2.jpg"><img src="/images/secure2.jpg" height="50px"></a>
+                                <a href="/images/secure2.jpg" target="_blank" onclick="window.open()"><img src="/images/secure2.jpg" height="50px"></a>
                             </li>
 
                             <li>
                                 Мы настоятельно рекомендуем включить в клиенте стима двухфакторную авторизацию (через email) <br />
-                                <a href="/images/secure3.png"><img src="/images/secure3.jpg" height="50px"></a>
+                                <a href="/images/secure3.png" target="_blank" ><img src="/images/secure3.jpg" height="50px"></a>
                             </li>
                         </ol>
                     </div>

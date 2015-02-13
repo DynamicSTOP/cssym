@@ -5,33 +5,22 @@ html, body{
 }
 
 body {
-    background:url(/images/background.jpg)/**/ #000000 no-repeat 50% 50%;
+    background:url(/images/background.jpg) #000000 no-repeat 50% 50%;
     background-attachment: fixed;
     -webkit-background-size: contain;
     -moz-background-size: contain;
     background-size: contain;
+    color: #d1d1d1;
+    padding-top: 50px;
 }
 
-article {
-    width: auto;
-    overflow-y: auto !important;
-}
-
-.blogPanel {
-    background-color: grey;
-    width: auto;
+.greyOpacity{
+    background-color: rgba(49, 49, 49, 0.77);
 }
 
 .rightPanel {
     float: right;
-    display: none;
     width: 200px;
-}
-
-.sitePanel, .userPanel {/app/example/app/example
-    min-height: 200px;
-    background-color: white;
-    display: block;
 }
 
 .serverPanel {
@@ -39,31 +28,6 @@ article {
     min-height: 200px;
 }
 
-.stickyTop{
-    display: none;
-    width: 100%;
-    padding: 2px 0px 2px 0px;
-    color: white;
-
-    background-color: black;
-    font-family: ‘Metrophobic’, Arial, serif; font-weight: 400;
-    font-size: 22px;
-    line-height: 23px;
-    vertical-align: middle;
-    text-align: right;
-}
-
-@media screen and (min-width: 800px) {
-    .rightPanel{
-        display: block;
-    }
-}
-
-@media screen and (min-width: 480px) {
-    .stickyTop{
-        display: block;
-    }
-}
 
 /* login page */
 .loginBlock{
