@@ -13,30 +13,25 @@ $app->view()->setTemplatesDirectory('../templates');
 /* routes */
 
 $app->get('/', function () use ($app) {
-    $app->render("index.html.twig");
+    $app->render("index.twig");
 });
 
 $app->get('/login', function () use ($app) {
     $openid = new LightOpenID("http://{$_SERVER['HTTP_HOST']}/login");
     if(!$openid->mode){
-        $app->render("login.html.twig");
+        $openid = new LightOpenID("http://{$_SERVER['HTTP_HOST']}/login");
+        $openid->identity = 'http://steamcommunity.com/openid/?l=russian';
+        $app->redirect($openid->authUrl());
     } else if($openid->mode == 'cancel') {
-        echo 'User has canceled authentication!';
+        $app->redirect("/");
     } else {
         if ($openid->validate()) {
             $id = $openid->identity;
             var_dump($id);
         } else {
-            echo 'not valid';
+            $app->redirect("/");
         }
     }
-
-});
-
-$app->post('/login', function () use ($app){
-    $openid = new LightOpenID("http://{$_SERVER['HTTP_HOST']}/login");
-    $openid->identity = 'http://steamcommunity.com/openid/?l=russian';
-    $app->redirect($openid->authUrl());
 });
 
 $app->run();
