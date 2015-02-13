@@ -97,16 +97,17 @@ article {
 
 .faq .element .question{
     color: #d1420c;
-    font-family: ‘Metrophobic’, Arial, serif; font-weight: 800;
+    font-family: ‘Metrophobic’, Arial, serif; font-weight: 500;
     font-size: 22px;
     line-height: 24px;
 }
 
 .faq .element .answer{
     color: #d1d1d1;
-    font-family: ‘Metrophobic’, Arial, serif; font-weight: 800;
+    font-family: ‘Metrophobic’, Arial, serif; font-weight: 500;
     font-size: 17px;
     line-height: 20px;
+    padding-top: 5px;
 }
 .faq .element .answer .highlight {
     font-weight: 800;
@@ -116,4 +117,8 @@ article {
 .faq .element .answer .highlight  strong{
     font-weight: 800;
     color: #00bd00;
+}
+
+.faq a:visited{
+    color:blue;
 }
