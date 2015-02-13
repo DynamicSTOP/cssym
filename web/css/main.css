@@ -1,20 +1,15 @@
-html{
-    background: black url(/images/loading.png) repeat;
-}
-
-body {
-
-    background:url(/images/background.jpg) #000000 no-repeat 50% 50%;
-    background-attachment: fixed;
-    -webkit-background-size: contain;
-    -moz-background-size: contain;
-    background-size: contain;
-}
-
 html, body{
     padding: 0;
     margin:0;
     height: 100%;
+}
+
+body {
+    background:url(/images/background.jpg)/**/ #000000 no-repeat 50% 50%;
+    background-attachment: fixed;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    background-size: contain;
 }
 
 article {
@@ -68,4 +63,57 @@ article {
     .stickyTop{
         display: block;
     }
+}
+
+/* login page */
+.loginBlock{
+    width: 100%;
+    margin: auto;
+    padding-top: 20px;
+    text-align: center;
+
+}
+
+.loginInfoBlock{
+    width: 80%;
+    text-align: center;
+    margin: auto;
+    background-color: rgba(49, 49, 49, 0.77);
+    border: 10px grey outset;
+    border-radius: 20px;
+    padding: 20px 40px 20px 40px;
+}
+
+.faq {
+    text-align: left;
+}
+
+.faq .element:first-child{
+    margin-top: 0px;
+}
+.faq .element{
+    margin-top:10px;
+}
+
+.faq .element .question{
+    color: #d1420c;
+    font-family: ‘Metrophobic’, Arial, serif; font-weight: 800;
+    font-size: 22px;
+    line-height: 24px;
+}
+
+.faq .element .answer{
+    color: black;
+    font-family: ‘Metrophobic’, Arial, serif; font-weight: 800;
+    font-size: 17px;
+    line-height: 20px;
+}
+.faq .element .answer .highlight {
+    font-weight: 800;
+    color: #006c00;
+}
+
+.faq .element .answer .highlight  strong{
+    font-weight: 800;
+    color: #00bd00;
 }

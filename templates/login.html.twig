@@ -1,5 +1,86 @@
 {% extends 'styled.html.twig' %}
 
+
+{#
+<div class="element">
+    <div class="question">Q: ?</div>
+    <div class="answer">A: </div>
+</div>
+#}
+
 {% block body %}
-    here lies some usable info
+    <div class="loginBlock">
+        <div class="loginInfoBlock">
+            <div>
+                <form action="/login" method="post">
+                    <input type="image" src="images/sits_large_border.png" type="submit">
+                </form>
+            </div>
+            <div class="faq">
+                <div class="element">
+                    <div class="question">Внимание, это важно!</div>
+                    <div class="answer">
+                        <ol>
+                            <li>
+                                Убедитесь что на следующей странице в адресной строке вашего браузера используется <span class="highlight">http<strong>s</strong></span> соединение <br />
+                                <img src="/images/secure1.jpg">
+                            </li>
+
+                            <li>
+                                Убедитесь что сертификат не был подменён<br />
+                                <a href="/images/secure2.jpg"><img src="/images/secure2.jpg" height="50px"></a>
+                            </li>
+
+                            <li>
+                                Мы настоятельно рекомендуем включить в клиенте стима двухфакторную авторизацию (через email) <br />
+                                <a href="/images/secure3.png"><img src="/images/secure3.jpg" height="50px"></a>
+                            </li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+            <div class="faq">
+                <div class="element">
+                    <div class="faq"><div class="question">F.A.Q.</div></div>
+                </div>
+
+                <div class="element">
+                    <div class="question">Q: Где регистрация, логин пароль и что это за кнопка стима?</div>
+                    <div class="answer">A: Регистрация, а так же вход на сайт, осуществляется только через Steam OpenID по
+                        кнопке выше. В планах после подтверждения аккаунта добавить возможность установки персонального
+                        пароля для последующих входов по паролю, но на данный момент вход осуществляется только через
+                        Steam OpenID.
+                    </div>
+                </div>
+
+                <div class="element">
+                    <div class="question">Q: А это безопасно?</div>
+                    <div class="answer">A: Мы никогда не потребуем Ваш логин или пароль и стим не Steam не предоставляет
+                        никаких способов через которые мы могли бы их узнать. OpenID технология создавалась специально
+                        для того чтобы имея регистрацию на одном сайте пользователь мог входить на других без утомительных
+                        операций создания связок логинов\паролей и подтверждений почтового ящика. Подробности технологии
+                        Вы можете узнать в википедии <a href="https://ru.wikipedia.org/wiki/OpenID">OpenID</a>. Если у
+                        Вас установлен современный антивирус и Вы следуете трем рекомендациям выше Вам нечего боятся.
+                        Подобный вход уже используется на таком сайте как http://www.dotabuff.com/.
+                    </div>
+                </div>
+
+                <div class="element">
+                    <div class="question">Q: И к чему у вас появится доступ?</div>
+                    <div class="answer">A: Мы узнаем только ваш SteamID. OpenID не является вариантом OAuth
+                        (<a href="https://ru.wikipedia.org/wiki/OAuth#.D0.9E.D1.82.D0.BB.D0.B8.D1.87.D0.B8.D0.B5_OAuth_.D0.BE.D1.82_OpenID">википедия</a>)
+                        и его единственное назначение подтвердить, что Вы тот за кого себя выдаёте. Это означает,
+                        что помимо SteamId мы можем получить только информацию которую вы публично распространяете,
+                        например на странице вашего профиля http://steamcommunity.com/id/&lt;STEAM_ID&gt;. Подробности
+                        о политике конфиденциальности Вы можете узнать тут
+                        <a href="http://store.steampowered.com/privacy_agreement/russian/">http://store.steampowered.com/privacy_agreement/russian/</a>.
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 {% endblock %}

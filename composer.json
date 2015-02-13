@@ -3,6 +3,8 @@
         "slim/slim": "2.*",
         "twig/extensions": "~1.0",
         "php": ">=5.3.3",
-        "slim/views": "0.1.*"
+        "slim/views": "0.1.*",
+        "lightopenid/lightopenid": "v0.7.0",
+        "doctrine/orm": "~2.4"
     }
 }
