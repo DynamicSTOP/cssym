@@ -24,9 +24,8 @@ $app->get('/login', function () use ($app) {
         echo 'User has canceled authentication!';
     } else {
         if ($openid->validate()) {
-            $app->
             $id = $openid->identity;
-            var_dump($openid);
+            var_dump($id);
         } else {
             echo 'not valid';
         }
