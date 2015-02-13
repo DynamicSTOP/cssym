@@ -119,6 +119,6 @@ article {
     color: #00bd00;
 }
 
-.faq a:visited{
-    color:blue;
+.faq a, .faq a:visited{
+    color: #88dfff;
 }
