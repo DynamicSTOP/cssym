@@ -3,3 +3,5 @@
 vendor/
 *.log
 composer.lock
+config/parameters.yml
+config/config.php

@@ -1,0 +1,11 @@
+<?php
+
+$dbParams = [
+    'driver' => 'pdo_mysql',
+    'host' => '127.0.0.1',
+    'dbname' => 'db',
+    'user' => 'user',
+    'password' => 'pass'
+];
+
+$salt = "CHANGE ME";
