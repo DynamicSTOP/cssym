@@ -47,6 +47,7 @@ if (isset($_SESSION['steamId'])) {//new user?
         die();
     }
     $data['user']['name'] = $user->getName();
+    $data['user']['avatar'] = $user->getAvatar();
     $_SESSION['user']['u'] = $user;
 }
 

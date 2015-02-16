@@ -2,7 +2,7 @@ html, body{
     padding: 0;
     margin:0;
     height: 100%;
-    background:url(/images/background.jpg) #000000 no-repeat 50% 50%;
+    background:/*url(/images/background.jpg)*/ #000000 no-repeat 50% 50%;
     background-attachment: fixed;
     -webkit-background-size: contain;
     -moz-background-size: contain;
@@ -19,71 +19,8 @@ body {
     background-color: rgba(49, 49, 49, 0.77);
 }
 
-.rightPanel {
-    float: right;
-    width: 200px;
-}
-
-.serverPanel {
-    background-color: darkgreen;
-    min-height: 200px;
-}
-
-
-/* login page */
-.loginBlock{
-    width: 100%;
-    margin: auto;
-    padding-top: 20px;
-    text-align: center;
-
-}
-
-.loginInfoBlock{
-    width: 80%;
-    text-align: center;
-    margin: auto;
-    background-color: rgba(49, 49, 49, 0.77);
-    border: 10px grey outset;
-    border-radius: 20px;
-    padding: 20px 40px 20px 40px;
-}
-
-.faq {
-    text-align: left;
-}
-
-.faq .element:first-child{
-    margin-top: 0px;
-}
-.faq .element{
-    margin-top:10px;
-}
-
-.faq .element .question{
-    color: #d1420c;
-    font-family: ‘Metrophobic’, Arial, serif; font-weight: 500;
-    font-size: 22px;
-    line-height: 24px;
-}
-
-.faq .element .answer{
-    color: #d1d1d1;
-    font-family: ‘Metrophobic’, Arial, serif; font-weight: 500;
-    font-size: 17px;
-    line-height: 20px;
-    padding-top: 5px;
-}
-.faq .element .answer .highlight {
-    font-weight: 800;
-    color: #006c00;
-}
-
-.faq .element .answer .highlight  strong{
-    font-weight: 800;
-    color: #00bd00;
-}
-
-.faq a, .faq a:visited{
-    color: #88dfff;
+.navbar-nav > li > a.avatarBar{
+    line-height: 32px;
+    padding-bottom: 6px;
+    padding-top: 9px;
 }
