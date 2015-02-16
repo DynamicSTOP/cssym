@@ -48,21 +48,32 @@ class User
     /**
      * @Column(type="datetime")
      * @var DateTime
-     * @Column(type="string", length=15)
      */
     protected $lastLoginDate;
 
     /**
      * $var string
-     * @Column(type="string",length=40, unique=true)
+     * @Column(type="string",length=40, nullable=true)
      */
     protected $cookie;
+
+    /**
+     * $var string
+     * @Column(type="string",length=200, nullable=true)
+     */
+    protected $avatar;
 
     /**
      * @Column(type="datetime")
      * @var DateTime
      */
     protected $created;
+
+    /**
+     * @Column(type="boolean")
+     * @var boolean
+     */
+    protected $vacBanned;
 
     public function __construct($steamId=""){
         $this->created = new \DateTime();
@@ -223,6 +234,52 @@ class User
 
 
     /**
+     * Set avatar
+     *
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Set vacBanned
+     *
+     * @param boolean $vacBanned
+     * @return User
+     */
+    public function setVacBanned($vacBanned)
+    {
+        $this->vacBanned = $vacBanned;
+
+        return $this;
+    }
+
+    /**
+     * Get vacBanned
+     *
+     * @return boolean
+     */
+    public function getVacBanned()
+    {
+        return $this->vacBanned;
+    }
+
+    /**
      * Set cookie
      *
      * @param string $cookie
@@ -243,5 +300,24 @@ class User
     public function getCookie()
     {
         return $this->cookie;
+    }
+
+    /**
+     * updates info based on steam public info
+     */
+    public function updateFromSteam(){
+        $doc = simplexml_load_file('http://steamcommunity.com/profiles/'.$this->steamId.'/?xml=1');
+        if(!empty($doc)){
+            try{
+                if($this->steamId!=$doc->steamID64->__toString())
+                    throw new \Exception(" steam id dosen't match. Expected {$this->steamId} and got '{$doc->steamID64->__toString()}'");
+                $this->name = $doc->steamID->__toString();
+                $this->avatar = $doc->avatarIcon->__toString();
+                $this->vacBanned = (int)$doc->vacBanned->__toString();
+
+            } catch (\Exception $e){
+                error_log("Oops! Something is wrong in User Entity: ".$e->getMessage());
+            }
+        }
     }
 }

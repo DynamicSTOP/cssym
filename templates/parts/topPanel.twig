@@ -9,8 +9,11 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Главная</a></li>
+                {% if user.name  %}
+                <li><a href="#">{{ user.name }}</a></li>
+                {% endif %}
             </ul>
-            {% if user.userId  %}
+            {% if user.name  %}
                 <form class="navbar-form navbar-right" action="/logout" method="get" role="signout">
                     <button type="submit" class="btn btn-danger">Выход</button>
                 </form>
