@@ -28,10 +28,21 @@
                             </a>
                         {% endif %}
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Профиль</a></li>
-                            <li><a href="#">Подать жалобу</a></li>
-                            {#<li class="divider"></li>#}
+                            <li role="presentation" class="dropdown-header">Профиль</li>
+                            <li><a href="#">Обновить профиль</a></li>
                             <li><a href="#">Посмотреть статистику</a></li>
+                            <li><a href="#">Запомнить меня на этом устройстве</a></li>
+                            <li class="divider"></li>
+                            <li role="presentation" class="dropdown-header">Заявки и жалобы</li>
+                            <li><a href="#">Подать заявку на разбан</a></li>
+                            <li><a href="#">Подать заявку на админку</a></li>
+                            <li><a href="#">Подать заявку на новые карты</a></li>
+                            <li><a href="#">Подать жалобу на администратора</a></li>
+                            <li><a href="#">Подать жалобу на игрока</a></li>
+                            <li class="divider"></li>
+                            <li role="presentation" class="dropdown-header">В рассмотрении</li>
+                            <li><a href="#">0 жалоб</a></li>
+                            <li><a href="#">0 заявок</a></li>
                         </ul>
                     </li>
                 {% endif %}
@@ -44,8 +55,8 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">О сервере</a></li>
                         <li><a href="#">Правила сервера</a></li>
-                        {#<li class="divider"></li>#}
                         <li><a href="#">Как подать заявку на разбан</a></li>
+                        <li><a href="#">Для правообладателей</a></li>
                     </ul>
                 </li>
             </ul>
