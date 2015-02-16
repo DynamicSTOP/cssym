@@ -3,7 +3,6 @@ require_once __DIR__."/../bootstrap.php";
 
 $app->get('/', function () use ($app,$data) {
     $app->render("index.twig", $data);
-    var_dump($_SESSION);
 });
 
 $app->get('/login', function () use ($app) {
