@@ -70,6 +70,18 @@ class User
     protected $created;
 
     /**
+     * @Column(type="datetime", nullable=true)
+     * @var DateTime
+     */
+    protected $lastCheckDate;
+
+    /**
+     * @Column(type="integer", nullable=true)
+     * @var integer
+     */
+    protected $checkCounter;
+
+    /**
      * @Column(type="boolean")
      * @var boolean
      */
@@ -78,6 +90,7 @@ class User
     public function __construct($steamId=""){
         $this->created = new \DateTime();
         $this->lastLoginDate = new \DateTime();
+        $this->lastCheckDate = new \DateTime("yesterday");
         $this->role = "USER";
         $this->steamId=$steamId;
     }
@@ -303,6 +316,52 @@ class User
     }
 
     /**
+     * Set lastCheckDate
+     *
+     * @param \DateTime $lastCheckDate
+     * @return User
+     */
+    public function setLastCheckDate($lastCheckDate)
+    {
+        $this->lastCheckDate = $lastCheckDate;
+
+        return $this;
+    }
+
+    /**
+     * Get lastCheckDate
+     *
+     * @return \DateTime
+     */
+    public function getLastCheckDate()
+    {
+        return $this->lastCheckDate;
+    }
+
+    /**
+     * Set checkCounter
+     *
+     * @param integer $checkCounter
+     * @return User
+     */
+    public function setCheckCounter($checkCounter)
+    {
+        $this->checkCounter = $checkCounter;
+
+        return $this;
+    }
+
+    /**
+     * Get checkCounter
+     *
+     * @return integer
+     */
+    public function getCheckCounter()
+    {
+        return $this->checkCounter;
+    }
+
+    /**
      * updates info based on steam public info
      */
     public function updateFromSteam(){
@@ -317,6 +376,45 @@ class User
 
             } catch (\Exception $e){
                 error_log("Oops! Something is wrong in User Entity: ".$e->getMessage());
+            }
+        }
+    }
+
+    public function isTooManyChecks(){
+        return $this->lastCheckDate->diff(new \DateTime())->days==0 && $this->checkCounter>200;
+    }
+
+    /**
+     *
+     */
+    public function checkForAdmin($updateCounter=true){
+        $this->lastCheckDate = new \DateTime('-1 day');
+        if($updateCounter)
+            $this->checkCounter++;
+
+        if($this->getVacBanned())
+            return false;
+        $this->updateFromSteam();
+        //user could catch a VAC ban after last login
+        if($this->getVacBanned())
+            return false;
+
+        //and here we should use steam web api...
+
+        die();
+        $url='https://steamcommunity.com/profiles/'.$this->steamId.'/games/?xml=1';
+
+        $doc = simplexml_load_file($url);
+
+        if(!empty($doc)){
+            try{
+
+                foreach($doc->games as $game){
+                    var_dump($game);
+                }
+
+            }catch(\Exception $e){
+                return false;
             }
         }
     }
