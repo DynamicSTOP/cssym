@@ -4,6 +4,7 @@ namespace WebApp\Entity;
 
 use WebApp\Entity;
 use Doctrine\ORM\Mapping;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity
@@ -87,12 +88,19 @@ class User
      */
     protected $vacBanned;
 
+    /**
+     * @ManyToOne(targetEntity="UserAdminRequest", inversedBy="assignedBugs")
+     * @var UserAdminRequest[]
+     **/
+    private $adminRequests = null;
+
     public function __construct($steamId=""){
         $this->created = new \DateTime();
         $this->lastLoginDate = new \DateTime();
         $this->lastCheckDate = new \DateTime("yesterday");
         $this->role = "USER";
         $this->steamId=$steamId;
+        $this->adminRequests = new \ArrayCollection();
     }
 
 
@@ -361,6 +369,14 @@ class User
         return $this->checkCounter;
     }
 
+    public function getAdminRequests(){
+        return $this->adminRequests;
+    }
+
+    public function addAdminRequest($adminRequest){
+        return $this->adminRequests[]=$adminRequest;
+    }
+
     /**
      * updates info based on steam public info
      */
@@ -368,11 +384,11 @@ class User
         $doc = simplexml_load_file('http://steamcommunity.com/profiles/'.$this->steamId.'/?xml=1');
         if(!empty($doc)){
             try{
-                if($this->steamId!=$doc->steamID64->__toString())
+                if($this->steamId!=$doc->steamID64)
                     throw new \Exception(" steam id dosen't match. Expected {$this->steamId} and got '{$doc->steamID64->__toString()}'");
-                $this->name = $doc->steamID->__toString();
-                $this->avatar = $doc->avatarIcon->__toString();
-                $this->vacBanned = (int)$doc->vacBanned->__toString();
+                $this->name = $doc->steamID;
+                $this->avatar = $doc->avatarIcon;
+                $this->vacBanned = (int)$doc->vacBanned;
 
             } catch (\Exception $e){
                 error_log("Oops! Something is wrong in User Entity: ".$e->getMessage());
@@ -399,13 +415,14 @@ class User
         if($this->getVacBanned())
             return false;
 
-        //and here we should use steam web api...
+        //TODO add time check!
 
-        die();
+        $adminRequest = new UserAdminRequest();
+        $adminRequest->setUser($this);
+        return $adminRequest;
+        /*
         $url='https://steamcommunity.com/profiles/'.$this->steamId.'/games/?xml=1';
-
         $doc = simplexml_load_file($url);
-
         if(!empty($doc)){
             try{
 
@@ -417,5 +434,7 @@ class User
                 return false;
             }
         }
+        */
+
     }
 }

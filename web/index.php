@@ -38,15 +38,16 @@ $app->get('/user/checkForAdmin', function() use ($app,$entityManager){
         if($user->isTooManyChecks()){
             var_dump("too many checks for today, try tomorrow");
         } else {
-            $user->checkForAdmin();
+            $request = $user->checkForAdmin();
+            if($request!==false){
+                $entityManager->persist($request);
+                $entityManager->flush();
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
         }
-    } else {
-        $app->redirect("/");
     }
-
-
-    $entityManager->persist($user);
-    $entityManager->flush();
+    $app->redirect("/");
 });
 
 $app->run();
