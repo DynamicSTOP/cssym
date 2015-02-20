@@ -89,7 +89,7 @@ class User
     protected $vacBanned;
 
     /**
-     * @ManyToOne(targetEntity="UserAdminRequest", inversedBy="assignedBugs")
+     * @oneToMany(targetEntity="UserAdminRequest",mappedBy="assignedBugs")
      * @var UserAdminRequest[]
      **/
     private $adminRequests = null;
@@ -100,7 +100,7 @@ class User
         $this->lastCheckDate = new \DateTime("yesterday");
         $this->role = "USER";
         $this->steamId=$steamId;
-        $this->adminRequests = new \ArrayCollection();
+        $this->adminRequests = new ArrayCollection();
     }
 
 
