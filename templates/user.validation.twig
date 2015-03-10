@@ -1,0 +1,17 @@
+{% extends 'styled.twig' %}
+
+{% block topPanel %}
+    {% embed 'parts/topPanel.twig' %}
+    {% endembed %}
+{% endblock %}
+
+
+{% block body %}
+    {% if validated %}
+        Ваш аккаунт прошел предварительную проверку.
+    {% elseif validated is null %}
+        Вы совершили слишком много запросов на админку за последние 24 часа.
+    {% else %}
+        Ваш аккаунт не прошел предварительную проверку: наиграно менее 5 часов за последние 2 недели и 1000 часов всего.
+    {% endif %}
+{% endblock %}

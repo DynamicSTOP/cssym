@@ -41,10 +41,17 @@ class UserAdminRequest{
      */
     protected $granted;
 
+    /**
+     * @Column(type="boolean")
+     * @var boolean
+     */
+    protected $validated;
+
     public function __construct(){
         $this->created = new \DateTime();
         $this->opened=1;
         $this->granted=0;
+        $this->validated=0;
     }
 
     /**
@@ -112,6 +119,29 @@ class UserAdminRequest{
     public function setGranted($granted)
     {
         $this->granted = $granted;
+
+        return $this;
+    }
+
+    /**
+     * Get validated
+     *
+     * @return boolean
+     */
+    public function getValidated()
+    {
+        return $this->validated;
+    }
+
+    /**
+     * Set validated
+     *
+     * @param boolean $validated
+     * @return UserAdminRequest
+     */
+    public function setValidated($validated)
+    {
+        $this->validated = $validated;
 
         return $this;
     }

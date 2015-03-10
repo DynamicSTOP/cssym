@@ -48,7 +48,7 @@ class User
 
     /**
      * @Column(type="datetime")
-     * @var DateTime
+     * @var \DateTime
      */
     protected $lastLoginDate;
 
@@ -66,13 +66,13 @@ class User
 
     /**
      * @Column(type="datetime")
-     * @var DateTime
+     * @var \DateTime
      */
     protected $created;
 
     /**
      * @Column(type="datetime", nullable=true)
-     * @var DateTime
+     * @var \DateTime
      */
     protected $lastCheckDate;
 
@@ -94,12 +94,15 @@ class User
      **/
     private $adminRequests = null;
 
-    public function __construct($steamId=""){
+    const maxCheckCount = 2;
+
+    public function __construct($steamId = "")
+    {
         $this->created = new \DateTime();
         $this->lastLoginDate = new \DateTime();
         $this->lastCheckDate = new \DateTime("yesterday");
         $this->role = "USER";
-        $this->steamId=$steamId;
+        $this->steamId = $steamId;
         $this->adminRequests = new ArrayCollection();
     }
 
@@ -369,72 +372,97 @@ class User
         return $this->checkCounter;
     }
 
-    public function getAdminRequests(){
+    public function getAdminRequests()
+    {
         return $this->adminRequests;
     }
 
-    public function addAdminRequest($adminRequest){
-        return $this->adminRequests[]=$adminRequest;
+    public function addAdminRequest($adminRequest)
+    {
+        return $this->adminRequests[] = $adminRequest;
     }
 
     /**
      * updates info based on steam public info
      */
-    public function updateFromSteam(){
-        $doc = simplexml_load_file('http://steamcommunity.com/profiles/'.$this->steamId.'/?xml=1');
-        if(!empty($doc)){
-            try{
-                if($this->steamId!=$doc->steamID64)
+    public function updateFromSteam()
+    {
+        $doc = simplexml_load_file('http://steamcommunity.com/profiles/' . $this->steamId . '/?xml=1');
+        if (!empty($doc)) {
+            try {
+                if ($this->steamId != $doc->steamID64)
                     throw new \Exception(" steam id dosen't match. Expected {$this->steamId} and got '{$doc->steamID64->__toString()}'");
                 $this->name = $doc->steamID;
                 $this->avatar = $doc->avatarIcon;
                 $this->vacBanned = (int)$doc->vacBanned;
 
-            } catch (\Exception $e){
-                error_log("Oops! Something is wrong in User Entity: ".$e->getMessage());
+            } catch (\Exception $e) {
+                error_log("Oops! Something is wrong in User Entity: " . $e->getMessage());
             }
         }
     }
 
-    public function isTooManyChecks(){
-        return $this->lastCheckDate->diff(new \DateTime())->days==0 && $this->checkCounter>200;
+    public function isTooManyChecks()
+    {
+        return $this->lastCheckDate->diff(new \DateTime())->days == 0 && $this->checkCounter > self::maxCheckCount;
     }
 
     /**
-     *
+     * param boolean $updateCounter
+     * @return UserAdminRequest or False
      */
-    public function checkForAdmin($updateCounter=true){
-        $this->lastCheckDate = new \DateTime('-1 day');
-        if($updateCounter)
+    public function checkForAdmin($updateCounter = true)
+    {
+        $this->lastCheckDate = new \DateTime();
+
+        if ($updateCounter)
             $this->checkCounter++;
 
-        if($this->getVacBanned())
-            return false;
-        $this->updateFromSteam();
-        //user could catch a VAC ban after last login
-        if($this->getVacBanned())
+        if ($this->getVacBanned())
             return false;
 
-        //TODO add time check!
+        //user could catch a VAC ban after last login
+        $this->updateFromSteam();
+        if ($this->getVacBanned())
+            return false;
 
         $adminRequest = new UserAdminRequest();
         $adminRequest->setUser($this);
-        return $adminRequest;
-        /*
-        $url='https://steamcommunity.com/profiles/'.$this->steamId.'/games/?xml=1';
-        $doc = simplexml_load_file($url);
-        if(!empty($doc)){
-            try{
 
-                foreach($doc->games as $game){
-                    var_dump($game);
+        $url = "http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key={$_SERVER['STEAM_APIKEY']}&steamid={$this->steamId}&format=json";
+
+        $data = file_get_contents($url);
+        if (empty($data) || $data === FALSE) {
+            //this shouldn't happen and it's not user fault so i should remove attempt
+            $this->checkCounter--;
+            //TODO may be i should place it in some kinda of cron job later?
+            return false;
+        }
+
+        $json = json_decode($data);
+        if (empty($json) || $json === FALSE) {
+            //and again check for bad data
+            $this->checkCounter--;
+            //TODO may be i should place it in some kinda of cron job later?
+            return false;
+        }
+
+        if (!isset($json->response->games))
+            return $adminRequest;
+
+        // appid is 730, let's search for it!
+        foreach ($json->response->games as $game) {
+            if (intval($game->appid) == 730) {
+                //steam return values in minutes btw
+                //TODO check playtime on our server! but this one is good too ^^
+                if (intval($game->playtime_2weeks) >= 60 * 5 && intval($game->playtime_forever) >= 60 * 1000) {
+                    $adminRequest->setValidated(true);
+                } else {
+                    $adminRequest->setOpened(false);
                 }
-
-            }catch(\Exception $e){
-                return false;
             }
         }
-        */
 
+        return $adminRequest;
     }
 }

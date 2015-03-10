@@ -21,14 +21,12 @@ $app->view()->setTemplatesDirectory('../templates');
 $data = array();
 
 
-
-
 if (isset($_SESSION['steamId'])) {//new user?
     $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
     $user = $userRepository->findOneBy(array("steamId" => $_SESSION['steamId']));
 
-    if (!isset($_SESSION['userId'])){//fresh login
-        if($user == null){//well it's new one
+    if (!isset($_SESSION['userId'])) {//fresh login
+        if ($user == null) {//well it's new one
             $user = new WebApp\Entity\User();
             $user->setName("user");
             $user->setSteamId($_SESSION['steamId']);
@@ -41,7 +39,7 @@ if (isset($_SESSION['steamId'])) {//new user?
         $_SESSION['userId'] = $user->getId();
         $_SESSION['steamId'] = $user->getSteamId();
     }
-    if($user==null){
+    if ($user == null) {
         session_destroy();
         header("Location: /");
         die();
