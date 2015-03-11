@@ -1,0 +1,13 @@
+{% extends 'styled.twig' %}
+
+{% block topPanel %}
+    {% embed 'parts/topPanel.twig' %}
+    {% endembed %}
+{% endblock %}
+
+{# TODO THIS SHOULD BE SHINY #}
+{% block body %}
+    Похоже что накрылись сервера авторизации стима и вы не использовали "запомнить меня на этом устройстве".
+    Тут уж ничего не поделать, ожидаем пока поднимутся сервера. Помониторить статус можете увидеть тут -&gt;
+    <a href="http://steamstat.us/">http://steamstat.us/</a> пункт "Steam Community".
+{% endblock %}

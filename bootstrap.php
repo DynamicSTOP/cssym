@@ -32,6 +32,7 @@ if (isset($_SESSION['steamId'])) {//new user?
             $user->setSteamId($_SESSION['steamId']);
         }
         $user->setLastIp($app->request()->getIp());
+        $user->setLastLoginDate(new \DateTime());
         $user->updateFromSteam();
 
         $entityManager->persist($user);
