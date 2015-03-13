@@ -55,7 +55,7 @@ $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManag
         $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
         $user = $userRepository->findOneBy(array("steamId" => $_SESSION['steamId']));
 
-        if ($user != null && $app->request()->get("i_confirm")=='я подтверждаю') {
+        if ($user != null && strtolower(trim($app->request()->get("i_confirm")))=='я подтверждаю') {
             if (!$user->isTooManyChecks()) {
                 $request = $user->checkForAdmin();
                 if ($request !== false) {
