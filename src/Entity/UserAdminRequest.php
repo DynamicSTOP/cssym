@@ -25,7 +25,7 @@ class UserAdminRequest{
 
     /**
      * @Column(type="datetime")
-     * @var DateTime
+     * @var \DateTime
      */
     protected $created;
 

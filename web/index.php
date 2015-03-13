@@ -14,6 +14,7 @@ $app->get('/', function () use ($app) {
 
 $app->get('/login', function () use ($app) {
     $openid = new LightOpenID("http://{$_SERVER['HTTP_HOST']}/login");
+    $url = "/";
     if (!$openid->mode) {
         try {
             $openid = new LightOpenID("http://{$_SERVER['HTTP_HOST']}/login");
@@ -31,8 +32,6 @@ $app->get('/login', function () use ($app) {
             if (isset($_SESSION['redirect'])) {
                 $url = $_SESSION['redirect'];
                 unset($_SESSION['redirect']);
-            } else {
-                $url = "/";
             }
         }
     }

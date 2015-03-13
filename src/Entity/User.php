@@ -408,7 +408,7 @@ class User
     }
 
     /**
-     * param boolean $updateCounter
+     * @param bool $updateCounter
      * @return UserAdminRequest or False
      */
     public function checkForAdmin($updateCounter = true)
