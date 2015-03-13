@@ -68,6 +68,22 @@ $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManag
     });
 });
 
+
+$app->group('/faq', function () use ($app) {
+    $app->get('/server', function () use ($app) {
+        $app->render("faq/server.twig");
+    });
+    $app->get('/rules', function () use ($app) {
+        $app->render("faq/rules.twig");
+    });
+    $app->get('/unban', function () use ($app) {
+        $app->render("faq/unban.twig");
+    });
+    $app->get('/copyright', function () use ($app) {
+        $app->render("faq/copyright.twig");
+    });
+});
+
 $app->get("/technicalIssues", function () use ($app) {
     $app->render("technicalIssues.twig");
 });
