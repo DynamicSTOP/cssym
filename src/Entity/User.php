@@ -17,6 +17,13 @@ class User
     const ADMIN="ADMIN";
     const USER="USER";
 
+    //steam 2 weeks
+    const MIN_REQUIRED_HOURS_2WEEKS = 5;
+    //steam lifetime
+    const MIN_REQUIRED_HOURS_LIFETIME = 1000;
+    //server 2 weeks
+    const MIN_REQUIRED_HOURS_2WEEKS_SERVER = 5;
+
     /**
      * @var integer
      *
@@ -460,7 +467,7 @@ class User
             if (intval($game->appid) == 730) {
                 //steam return values in minutes btw
                 //TODO check playtime on our server! but this one is good too ^^
-                if (intval($game->playtime_2weeks) >= 60 * 5 && intval($game->playtime_forever) >= 60 * 1000) {
+                if (intval($game->playtime_2weeks) >= 60 * self::MIN_REQUIRED_HOURS_2WEEKS && intval($game->playtime_forever) >= 60 * self::MIN_REQUIRED_HOURS_LIFETIME) {
                     $adminRequest->setValidated(true);
                 } else {
                     $adminRequest->setOpened(false);

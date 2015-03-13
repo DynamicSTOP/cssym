@@ -45,12 +45,17 @@ $app->get('/logout', function () use ($app) {
 });
 
 $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManager) {
-    $app->get('/checkForAdmin', function () use ($app, $entityManager) {
+
+    $app->get('/requestAdminRights', function() use($app){
+        $app->render("user/requestAdminRights.twig");
+    });
+
+    $app->post('/checkForAdmin', function () use ($app, $entityManager) {
         //TODO this method looks like a mess. u probably want to have a controller finally
         $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
         $user = $userRepository->findOneBy(array("steamId" => $_SESSION['steamId']));
 
-        if ($user != null) {
+        if ($user != null && $app->request()->get("i_confirm")=='я подтверждаю') {
             if (!$user->isTooManyChecks()) {
                 $request = $user->checkForAdmin();
                 if ($request !== false) {
@@ -61,7 +66,7 @@ $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManag
                 $entityManager->flush();
                 $app->view()->appendData(['validated' => $request !== false && $request->getValidated()]);
             }
-            $app->render("user.validation.twig");
+            $app->render("user/validation.twig");
         } else {
             $app->redirect("/");
         }

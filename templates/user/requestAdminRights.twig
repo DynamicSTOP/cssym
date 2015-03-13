@@ -1,0 +1,48 @@
+{% extends 'styled.twig' %}
+
+{% block topPanel %}
+    {% embed 'parts/topPanel.twig' %}
+    {% endembed %}
+{% endblock %}
+
+{% block customJavaScript %}
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(document).on("keyup","#i_confirm",function(){
+            if(this.value.trim().toLowerCase()=="я подтверждаю")
+                $("button#requestAdminRights").removeAttr("disabled");
+            else
+                $("button#requestAdminRights").attr("disabled","disabled");
+        });
+    });
+    </script>
+{% endblock %}
+
+{# TODO THIS SHOULD BE SHINY #}
+{% block body %}
+    <div>
+    Что необходимо для получения админки:
+        <ol>
+            <li>Быть старше 18 лет.</li>
+            <li>Неукоснительно соблюдать <a href="/faq/rules" target="_blank">правила сервера.</a></li>
+            <li>Не иметь VAC банов.</li>
+            <li>Наиграть за последние две недели как минимум {{ constant("\\WebApp\\Entity\\User::MIN_REQUIRED_HOURS_2WEEKS") }} часов.</li>
+            <li>Наиграть за всё врёмя как минимум {{ constant("\\WebApp\\Entity\\User::MIN_REQUIRED_HOURS_LIFETIME") }} часов.</li>
+            <li>Иметь настроенный микрофон.</li>
+            <li>Регулярно появлятся на сервере (не менее {{ constant("\\WebApp\\Entity\\User::MIN_REQUIRED_HOURS_2WEEKS_SERVER") }} часов в 2 недели)
+                или заранее (как минимум за 3 дня) уведомлять главного админа о длительности отсутствия.</li>
+        </ol>
+    </div>
+    <br />
+    <div>Подтверждаете ли Вы, что соответствуете всем требованиям выше, будете соблюдать правила сервера включая правила для админов, следить за порядком и не превышать полномочий?</div>
+    <div class="col-lg-6">
+        <div class="input-group">
+            <form id="request" method="post" action="/user/checkForAdmin">
+                <input id="i_confirm" type="text" name="i_confirm" class="form-control" placeholder="введите &quot;я подтверждаю&quot;">
+                <span class="input-group-btn">
+                    <button id="requestAdminRights" class="btn btn-default" disabled="disabled" type="submit">Подать заявку!</button>
+                </span>
+            </form>
+        </div>
+    </div>
+{% endblock %}
