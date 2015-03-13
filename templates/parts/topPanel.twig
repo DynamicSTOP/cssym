@@ -45,7 +45,8 @@
                             <li class="divider"></li>
                             <li role="presentation" class="dropdown-header">В рассмотрении</li>
                             <li><a href="#">0 жалоб</a></li>
-                            <li><a href="#">0 заявок</a></li>
+                            {# lang problems for numbers like 1,2,3,4 ....#}
+                            <li><a href="#">{{ user.adminRequestTotally }} открытых заявок</a></li>
                         </ul>
                     </li>
                 {% endif %}

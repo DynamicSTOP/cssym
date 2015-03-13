@@ -89,7 +89,7 @@ class User
     protected $vacBanned;
 
     /**
-     * @oneToMany(targetEntity="UserAdminRequest",mappedBy="assignedBugs")
+     * @oneToMany(targetEntity="UserAdminRequest",mappedBy="user")
      * @var UserAdminRequest[]
      **/
     private $adminRequests = null;

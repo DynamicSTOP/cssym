@@ -43,7 +43,16 @@ if (isset($_SESSION['steamId'])) {//new user?
         header("Location: /");
         die();
     } else {
-        $app->view()->setData(['user' => ['name' => $user->getName(), 'avatar' => $user->getAvatar()]]);
+        $app->view()->setData(
+            [
+                'user' => [
+                    'name' => $user->getName(),
+                    'avatar' => $user->getAvatar(),
+                    //TODO show only opened
+                    'adminRequestTotally' => $user->getAdminRequests()->count()
+                ]
+            ]
+        );
     }
 }
 
