@@ -1,15 +1,15 @@
 <?php
 require_once __DIR__ . "/../bootstrap.php";
 
-$redirectIfNotLoggedIn = function(\Slim\Route $route) use ($app){
-    if(!isset($_SESSION['userId'])){
-        $_SESSION['redirect']=$route->getPattern();
+$redirectIfNotLoggedIn = function (\Slim\Route $route) use ($app) {
+    if (!isset($_SESSION['userId'])) {
+        $_SESSION['redirect'] = $route->getPattern();
         $app->redirect("/login");
     };
 };
 
-$app->get('/', function () use ($app, $data) {
-    $app->render("index.twig", $data);
+$app->get('/', function () use ($app) {
+    $app->render("index.twig");
 });
 
 $app->get('/login', function () use ($app) {
@@ -18,22 +18,25 @@ $app->get('/login', function () use ($app) {
         try {
             $openid = new LightOpenID("http://{$_SERVER['HTTP_HOST']}/login");
             $openid->identity = 'http://steamcommunity.com/openid/?l=russian';
-            $url=$openid->authUrl();
-        } catch(\Exception $e){
-            $url="/technicalIssues";
+            $url = $openid->authUrl();
+        } catch (\Exception $e) {
+            $url = "/technicalIssues";
         }
-        $app->redirect($url);
     } else if ($openid->mode != 'cancel') {
         if ($openid->validate()) {
             $id = $openid->identity;
             $ptn = "/^http:\\/\\/steamcommunity\\.com\\/openid\\/id\\/(7[0-9]{15,25}+)$/";
             preg_match($ptn, $id, $matches);
             $_SESSION['steamId'] = $matches[1];
-            if(isset($_SESSION['redirect']))
-                $app->redirect($_SESSION['redirect']);
+            if (isset($_SESSION['redirect'])) {
+                $url = $_SESSION['redirect'];
+                unset($_SESSION['redirect']);
+            } else {
+                $url = "/";
+            }
         }
     }
-    $app->redirect("/");
+    $app->redirect($url);
 });
 
 $app->get('/logout', function () use ($app) {
@@ -42,8 +45,8 @@ $app->get('/logout', function () use ($app) {
     $app->redirect("/");
 });
 
-$app->group('/user', $redirectIfNotLoggedIn, function() use($app,$entityManager, $data){
-    $app->get('/checkForAdmin', function () use ($app, $entityManager, $data) {
+$app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManager) {
+    $app->get('/checkForAdmin', function () use ($app, $entityManager) {
         //TODO this method looks like a mess. u probably want to have a controller finally
         $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
         $user = $userRepository->findOneBy(array("steamId" => $_SESSION['steamId']));
@@ -57,16 +60,16 @@ $app->group('/user', $redirectIfNotLoggedIn, function() use($app,$entityManager,
                 }
                 $entityManager->persist($user);
                 $entityManager->flush();
-                $data['validated'] = $request !== false && $request->getValidated();
+                $app->view()->appendData(['validated' => $request !== false && $request->getValidated()]);
             }
-            $app->render("user.validation.twig", $data);
+            $app->render("user.validation.twig");
         } else {
             $app->redirect("/");
         }
     });
 });
 
-$app->get("/technicalIssues",function() use($app){
+$app->get("/technicalIssues", function () use ($app) {
     $app->render("technicalIssues.twig");
 });
 

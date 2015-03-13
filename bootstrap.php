@@ -18,9 +18,7 @@ $app = new \Slim\Slim(array(
 
 $app->view()->setTemplatesDirectory('../templates');
 
-$data = array();
-
-
+//this should prevent dozens of ($a,$b,$c,$d,$e..) in use closure
 if (isset($_SESSION['steamId'])) {//new user?
     $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
     $user = $userRepository->findOneBy(array("steamId" => $_SESSION['steamId']));
@@ -44,10 +42,9 @@ if (isset($_SESSION['steamId'])) {//new user?
         session_destroy();
         header("Location: /");
         die();
+    } else {
+        $app->view()->setData(['user' => ['name' => $user->getName(), 'avatar' => $user->getAvatar()]]);
     }
-    $data['user']['name'] = $user->getName();
-    $data['user']['avatar'] = $user->getAvatar();
-    $_SESSION['user']['u'] = $user;
 }
 
 
