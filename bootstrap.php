@@ -48,6 +48,7 @@ if (isset($_SESSION['steamId'])) {//new user?
                 'user' => [
                     'name' => $user->getName(),
                     'avatar' => $user->getAvatar(),
+                    'role' => $user->getRole(),
                     //TODO show only opened
                     'adminRequestTotally' => $user->getAdminRequests()->count()
                 ]

@@ -12,6 +12,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User
 {
+
+    const SUPERADMIN="SUPERADMIN";
+    const ADMIN="ADMIN";
+    const USER="USER";
+
     /**
      * @var integer
      *
@@ -101,7 +106,7 @@ class User
         $this->created = new \DateTime();
         $this->lastLoginDate = new \DateTime();
         $this->lastCheckDate = new \DateTime("yesterday");
-        $this->role = "USER";
+        $this->role = self::USER;
         $this->steamId = $steamId;
         $this->adminRequests = new ArrayCollection();
     }
