@@ -98,6 +98,9 @@ $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManag
         $app->get('/unban', function() use($app){
             $app->render("user/request/unban.twig");
         });
+        $app->get('/list', function() use($app){
+            $app->render("user/request/list.twig");
+        });
     });
 
     $app->group('/abuse', function() use($app){
@@ -106,6 +109,9 @@ $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManag
         });
         $app->get('/admin', function() use($app){
             $app->render("user/abuse/admin.twig");
+        });
+        $app->get('/list', function() use($app){
+            $app->render("user/abuse/list.twig");
         });
     });
 });

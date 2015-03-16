@@ -45,9 +45,9 @@
                             <li><a href="/user/abuse/player">Подать жалобу на игрока</a></li>
                             <li class="divider"></li>
                             <li role="presentation" class="dropdown-header">В рассмотрении</li>
-                            <li><a href="#">0 жалоб</a></li>
+                            <li><a href="/user/abuse/list">0 жалоб</a></li>
                             {# TODO fix lang problems for numbers like 1,2,3,4 ....#}
-                            <li><a href="#">{{ user.adminRequestTotally }} открытых заявок</a></li>
+                            <li><a href="/user/request/list">{{ user.adminRequestTotally }} открытых заявок</a></li>
                         </ul>
                     </li>
                 {% endif %}
