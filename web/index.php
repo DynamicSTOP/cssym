@@ -46,10 +46,6 @@ $app->get('/logout', function () use ($app) {
 
 $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManager) {
 
-    $app->get('/requestAdminRights', function() use($app){
-        $app->render("user/requestAdminRights.twig");
-    });
-
     $app->get('/refresh', function() use($app,$entityManager){
         // TODO restrict more than 3 refresh actions per 24 hours
         $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
@@ -82,6 +78,35 @@ $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManag
         } else {
             $app->redirect("/");
         }
+    });
+
+    $app->get('/rememberMe', function() use($app){
+        $app->render("user/rememberMe.twig");
+    });
+
+    $app->get('/statistic', function() use($app){
+        $app->render("user/statistic.twig");
+    });
+
+    $app->group('/request',function()use($app){
+        $app->get('/adminRights', function() use($app){
+            $app->render("user/request/adminRights.twig");
+        });
+        $app->get('/newMap', function() use($app){
+            $app->render("user/request/newMap.twig");
+        });
+        $app->get('/unban', function() use($app){
+            $app->render("user/request/unban.twig");
+        });
+    });
+
+    $app->group('/abuse', function() use($app){
+        $app->get('/player', function() use($app){
+            $app->render("user/abuse/player.twig");
+        });
+        $app->get('/admin', function() use($app){
+            $app->render("user/abuse/admin.twig");
+        });
     });
 });
 
