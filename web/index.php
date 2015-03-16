@@ -50,6 +50,18 @@ $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManag
         $app->render("user/requestAdminRights.twig");
     });
 
+    $app->get('/refresh', function() use($app,$entityManager){
+        // TODO restrict more than 3 refresh actions per 24 hours
+        $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
+        $user = $userRepository->findOneBy(array("steamId" => $_SESSION['steamId']));
+        if($user!=null){
+            $user->updateFromSteam();
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
+        $app->redirect("/");
+    });
+
     $app->post('/checkForAdmin', function () use ($app, $entityManager) {
         //TODO this method looks like a mess. u probably want to have a controller finally
         $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
