@@ -5,7 +5,7 @@ if (class_exists("Memcache")) {
     if ($mc->connect('127.0.0.1', 11211) !== false){
         if($mc->get('curl_csgo')===false){
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, 'http://store.steampowered.com/api/appdetails/?appids=730');
+            curl_setopt($ch, CURLOPT_URL, 'http://api.steampowered.com/ISteamNews/GetNewsForApp/v0001/?format=json&appid=730&count=3');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -16,7 +16,7 @@ if (class_exists("Memcache")) {
             $json_news = json_decode($answer);
             if($json_news!==false){
                 echo "setted\n";
-                $mc->set('curl_csgo',$answer,MEMCACHE_COMPRESSED,3600);
+                $mc->set('curl_csgo',json_encode($json_news->appnews->newsitems->newsitem),MEMCACHE_COMPRESSED,3600);
             }
         } else {
             echo "in memcache\n";

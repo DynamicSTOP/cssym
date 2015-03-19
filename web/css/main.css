@@ -2,7 +2,7 @@ html, body{
     padding: 0;
     margin:0;
     height: 100%;
-    background:url(/images/background.jpg) #000000 no-repeat 50% 50%;
+    background:#000000 url(/images/background.jpg) no-repeat 50% 50%;
     background-attachment: fixed;
     -webkit-background-size: contain;
     -moz-background-size: contain;
@@ -19,4 +19,9 @@ body {
     line-height: 32px;
     padding-bottom: 6px;
     padding-top: 9px;
+}
+
+/*news block*/
+.newsItem img {
+    width: 100%;
 }

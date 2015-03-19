@@ -9,6 +9,17 @@ $redirectIfNotLoggedIn = function (\Slim\Route $route) use ($app) {
 };
 
 $app->get('/', function () use ($app) {
+    if(class_exists("Memcache")) {
+        $mc = new Memcache();
+        if ($mc->connect('127.0.0.1', 11211) !== false) {
+            if ($mc->get('curl_csgo') !== false) {
+                $news = json_decode($mc->get('curl_csgo'));
+                if($news!==false){
+                    $app->view()->appendData(['news_items'=>$news]);
+                }
+            }
+        }
+    }
     $app->render("index.twig");
 });
 

@@ -1,0 +1,5 @@
+{% for item in news_items %}
+    <div class="newsItem">
+        {{ item.contents | raw }}
+    </div>
+{% endfor %}
