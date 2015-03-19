@@ -58,3 +58,21 @@ body {
 }
 
 
+/* topics */
+.topicGroup{
+    border: white 2px solid;
+    padding: 15px;
+    font-size:large;
+    background-color: rgba(20, 20, 20, 0.88);
+    border-radius: 15px;
+}
+
+.topicGroup .row{
+    margin-top:15px;
+}
+
+.topicGroup .row:first-child{
+    border-bottom: 1px solid white;
+    padding-bottom: 15px;
+    margin-top: 0;
+}
