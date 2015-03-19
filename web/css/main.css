@@ -22,6 +22,6 @@ body {
 }
 
 /*news block*/
-.newsItem img {
-    width: 100%;
+.newsItem *{
+    max-width: 100%;
 }
