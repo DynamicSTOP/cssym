@@ -106,6 +106,12 @@ class User
      **/
     private $adminRequests = null;
 
+    /**
+     * @oneToMany(targetEntity="UserMapRequest",mappedBy="user")
+     * @var UserMapRequest[]
+     **/
+    private $mapRequests = null;
+
     const maxCheckCount = 2;
 
     public function __construct($steamId = "")
@@ -116,6 +122,7 @@ class User
         $this->role = self::USER;
         $this->steamId = $steamId;
         $this->adminRequests = new ArrayCollection();
+        $this->mapRequests = new ArrayCollection();
     }
 
 
@@ -392,6 +399,17 @@ class User
     public function addAdminRequest($adminRequest)
     {
         return $this->adminRequests[] = $adminRequest;
+    }
+
+
+    public function getMapRequests()
+    {
+        return $this->mapRequests;
+    }
+
+    public function addMapRequest($mapRequest)
+    {
+        return $this->mapRequests[] = $mapRequest;
     }
 
     /**
