@@ -1,5 +1,11 @@
 {% for item in news_items %}
     <div class="newsItem">
+        <div class="container-fluid">
+            <div class="row newsHead">
+                <div class="col-md-4 text-left"><h3>{{ item.date }}</h3></div>
+                <div class="col-md-8 text-right col-md-offset-4"><h3><a target="blank" href="{{ item.url | raw }}">{{ item.feedlabel }}</a></h3></div>
+            </div>
+        </div>
         {{ item.contents | raw }}
     </div>
 {% endfor %}

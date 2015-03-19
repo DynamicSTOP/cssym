@@ -15,6 +15,11 @@ $app->get('/', function () use ($app) {
             if ($mc->get('curl_csgo') !== false) {
                 $news = json_decode($mc->get('curl_csgo'));
                 if($news!==false){
+                    foreach($news as &$newsItem){
+                        $newsItem->date=date("j M",$newsItem->date);
+                    }
+                    unset($newsItem);
+                    //date("h-M-s",$news[0]->date);
                     $app->view()->appendData(['news_items'=>$news]);
                 }
             }

@@ -12,7 +12,7 @@ html, body{
 }
 
 body {
-    padding-top: 50px;
+    padding-top: 60px;
 }
 
 .navbar-nav > li > a.avatarBar{
@@ -25,3 +25,34 @@ body {
 .newsItem *{
     max-width: 100%;
 }
+.newsItem{
+    background-color: rgba(20, 20, 20, 0.88);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.newsItem:last-child{
+    margin-bottom: 0;
+}
+
+.newsItem > .container-fluid{
+    border-bottom: 1px solid white;
+    border-bottom-style: inset;
+    margin-bottom: 10px;
+}
+
+.newsItem .newsHead{
+    vertical-align: baseline;
+    position:relative;
+}
+
+.newsItem .newsHead div:first-child{
+    position:absolute;
+    bottom: 0px;
+}
+
+.row.newsHead h3{
+    margin-top:10px;
+}
+
+
