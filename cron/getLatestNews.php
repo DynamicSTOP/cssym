@@ -5,7 +5,7 @@ if (class_exists("Memcache")) {
     if ($mc->connect('127.0.0.1', 11211) !== false){
         if($mc->get('curl_csgo')===false){
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, 'http://api.steampowered.com/ISteamNews/GetNewsForApp/v0001/?format=json&appid=730&count=3');
+            curl_setopt($ch, CURLOPT_URL, 'http://api.steampowered.com/ISteamNews/GetNewsForApp/v0001/?format=json&appid=730&count=3&maxlength=280');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
