@@ -88,13 +88,34 @@ $app->group('/user', $redirectIfNotLoggedIn, function () use ($app, $entityManag
         $app->render("user/statistic.twig");
     });
 
-    $app->group('/request',function()use($app){
+    $app->group('/request',function()use($app,$entityManager){
         $app->get('/adminRights', function() use($app){
             $app->render("user/request/adminRights.twig");
         });
+
         $app->get('/newMap', function() use($app){
             $app->render("user/request/newMap.twig");
         });
+
+        $app->post('/newMap', function() use($app,$entityManager){
+            $mapName=trim($app->request()->post("mapName"));
+            $workshopLink=trim($app->request()->post("workshopLink"));
+            if(!empty($mapName) || !empty($workshopLink)){
+                $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
+                $user = $userRepository->findOneBy(array("steamId" => $_SESSION['steamId']));
+                $mapRequest = new \WebApp\Entity\UserMapRequest();
+                $mapRequest->setUser($user);
+                $mapRequest->setWorkshopLink($workshopLink);
+                $mapRequest->setMapName($mapName);
+                $entityManager->persist($mapRequest);
+                $entityManager->flush();
+                $app->view()->appendData(['added'=>true]);
+            }
+            $app->render("user/request/newMap.twig");
+        });
+
+
+
         $app->get('/unban', function() use($app){
             $app->render("user/request/unban.twig");
         });

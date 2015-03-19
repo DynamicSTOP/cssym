@@ -57,6 +57,8 @@ class UserMapRequest{
         $this->created = new \DateTime();
         $this->opened=1;
         $this->added=0;
+        $this->workshopLink='';
+        $this->mapName='';
     }
 
     /**
@@ -157,7 +159,7 @@ class UserMapRequest{
      */
     public function setWorkshopLink($workshopLink)
     {
-        $this->added = $workshopLink;
+        $this->workshopLink = $workshopLink;
 
         return $this;
     }
