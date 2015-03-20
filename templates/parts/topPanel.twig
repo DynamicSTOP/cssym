@@ -52,22 +52,22 @@
                     </li>
                 {% endif %}
                 {# Admin panel #}
-                {% if (user.role is constant("\\WebApp\\Entity\\User::ADMIN") or user.role is constant("\\WebApp\\Entity\\User::SUPERADMIN") ) %}
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        Админка <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li role="presentation" class="dropdown-header">Заявки</li>
-                        <li><a href="#">Заявки на админку</a></li>
-                        <li><a href="#">Заявки на разбан</a></li>
-                        <li><a href="#">Заявки на новые карты</a></li>
-                        <li class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Жалобы</li>
-                        <li><a href="#">Жалобы на игроков</a></li>
-                        <li><a href="#">Жалобы на админов</a></li>
-                    </ul>
-                </li>
+                {% if customElements.showAdminPanel %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Админка <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation" class="dropdown-header">Заявки</li>
+                            <li><a href="#">Заявки на админку</a></li>
+                            <li><a href="#">Заявки на разбан</a></li>
+                            <li><a href="#">Заявки на новые карты</a></li>
+                            <li class="divider"></li>
+                            <li role="presentation" class="dropdown-header">Жалобы</li>
+                            <li><a href="#">Жалобы на игроков</a></li>
+                            <li><a href="#">Жалобы на админов</a></li>
+                        </ul>
+                    </li>
                 {% endif %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

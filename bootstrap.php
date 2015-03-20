@@ -24,12 +24,15 @@ $app->view()->setData(['customElements' => ['showNews' => true]]);
 if (isset($_SESSION['steamId'])) {//new user?
     $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
     $user = $userRepository->findOneBy(array("steamId" => $_SESSION['steamId']));
+    $roleRepository = $entityManager->getRepository("\\WebApp\\Entity\\UserRole");
 
     if (!isset($_SESSION['userId'])) {//fresh login
         if ($user == null) {//well it's new one
             $user = new WebApp\Entity\User();
             $user->setName("user");
             $user->setSteamId($_SESSION['steamId']);
+            $role = $roleRepository->findOneBy(['role' => 'USER']);
+            $user->setRole($role);
         }
         $user->setLastIp($app->request()->getIp());
         $user->setLastLoginDate(new \DateTime());
@@ -45,18 +48,31 @@ if (isset($_SESSION['steamId'])) {//new user?
         header("Location: /");
         die();
     } else {
+        $config = new \DoctrineExtensions\NestedSet\Config($entityManager, '\WebApp\Entity\UserRole');
+        $nsm = new \DoctrineExtensions\NestedSet\Manager($config);
+        $roleNode = $nsm->wrapNode($user->getRole());
+
+        $checkRole = function ($role) use ($nsm, $roleNode) {
+            if (empty($role))
+                return false;
+            if ($role->getId() == $roleNode->getId())
+                return true;
+            return $nsm->wrapNode($role)->isDescendantOf($roleNode);
+        };
+
         $app->view()->appendData(
             [
                 'user' => [
                     'name' => $user->getName(),
                     'avatar' => $user->getAvatar(),
-                    'role' => $user->getRole(),
+                    'role' => $user->getRole()->getRole(),
                     //TODO show only opened
                     'adminRequestTotally' => $user->getAdminRequests()->count()
                 ],
                 //TODO should load them from db or session. right?
                 'customElements' => [
-                    'showNews' => FALSE
+                    'showNews' => TRUE,
+                    'showAdminPanel' => $checkRole($roleRepository->findOneBy(['role' => 'ADMIN']))
                 ]
             ]
         );

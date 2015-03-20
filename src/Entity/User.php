@@ -13,9 +13,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 class User
 {
 
-    const SUPERADMIN="SUPERADMIN";
-    const ADMIN="ADMIN";
-    const USER="USER";
+    const SUPERADMIN = "SUPERADMIN";
+    const ADMIN = "ADMIN";
+    const USER = "USER";
 
     //steam 2 weeks
     const MIN_REQUIRED_HOURS_2WEEKS = 5;
@@ -125,7 +125,6 @@ class User
         $this->created = new \DateTime();
         $this->lastLoginDate = new \DateTime();
         $this->lastCheckDate = new \DateTime("yesterday");
-        $this->role = self::USER;
         $this->steamId = $steamId;
         $this->adminRequests = new ArrayCollection();
         $this->mapRequests = new ArrayCollection();
@@ -274,7 +273,7 @@ class User
     /**
      * Get role
      *
-     * @return string
+     * @return UserRole
      */
     public function getRole()
     {
@@ -510,5 +509,11 @@ class User
         }
 
         return $adminRequest;
+    }
+
+
+    public function checkAccess($requestedRoleName)
+    {
+
     }
 }
