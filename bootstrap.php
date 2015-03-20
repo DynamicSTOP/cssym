@@ -18,6 +18,8 @@ $app = new \Slim\Slim(array(
 
 $app->view()->setTemplatesDirectory('../templates');
 
+$app->view()->setData(['customElements' => ['showNews' => true]]);
+
 //this should prevent dozens of ($a,$b,$c,$d,$e..) in use closure
 if (isset($_SESSION['steamId'])) {//new user?
     $userRepository = $entityManager->getRepository("\\WebApp\\Entity\\User");
@@ -43,7 +45,7 @@ if (isset($_SESSION['steamId'])) {//new user?
         header("Location: /");
         die();
     } else {
-        $app->view()->setData(
+        $app->view()->appendData(
             [
                 'user' => [
                     'name' => $user->getName(),
@@ -51,6 +53,10 @@ if (isset($_SESSION['steamId'])) {//new user?
                     'role' => $user->getRole(),
                     //TODO show only opened
                     'adminRequestTotally' => $user->getAdminRequests()->count()
+                ],
+                //TODO should load them from db or session. right?
+                'customElements' => [
+                    'showNews' => FALSE
                 ]
             ]
         );
