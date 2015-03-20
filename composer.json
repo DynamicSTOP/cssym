@@ -5,7 +5,8 @@
         "php": ">=5.3.3",
         "slim/views": "0.1.*",
         "lightopenid/lightopenid": "v0.7.0",
-        "doctrine/orm": "~2.4"
+        "doctrine/orm": "~2.4",
+        "cbsi/doctrine2-nestedset": "@dev"
     },
     "autoload": {
         "psr-4": {

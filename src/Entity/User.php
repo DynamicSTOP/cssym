@@ -53,9 +53,9 @@ class User
     protected $steamId;
 
     /**
-     * @var string
-     * @Column(type="string", length=20)
-     */
+     * @ManyToOne(targetEntity="UserRole")
+     * @JoinColumn(name="role_id", referencedColumnName="id")
+     **/
     protected $role;
 
     /**
@@ -112,6 +112,12 @@ class User
      **/
     private $mapRequests = null;
 
+    /**
+     * @oneToMany(targetEntity="Topic",mappedBy="createdBy")
+     * @var Topic[]
+     **/
+    private $createdTopics = null;
+
     const maxCheckCount = 2;
 
     public function __construct($steamId = "")
@@ -123,6 +129,7 @@ class User
         $this->steamId = $steamId;
         $this->adminRequests = new ArrayCollection();
         $this->mapRequests = new ArrayCollection();
+        $this->createdTopics = new ArrayCollection();
     }
 
 
@@ -227,7 +234,6 @@ class User
     {
         return $this->created;
     }
-
 
     /**
      * Set steamId
@@ -410,6 +416,16 @@ class User
     public function addMapRequest($mapRequest)
     {
         return $this->mapRequests[] = $mapRequest;
+    }
+
+    public function getCreatedTopics()
+    {
+        return $this->createdTopics;
+    }
+
+    public function addCreatedTopic($topic)
+    {
+        return $this->createdTopics[] = $topic;
     }
 
     /**
