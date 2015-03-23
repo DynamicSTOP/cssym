@@ -1,0 +1,7 @@
+<IfModule php5_module>
+    php_flag session.cookie_httponly on
+</IfModule>
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
