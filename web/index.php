@@ -1,12 +1,6 @@
 <?php
 require_once __DIR__ . "/../bootstrap.php";
-
-$redirectIfNotLoggedIn = function (\Slim\Route $route) use ($app) {
-    if (!isset($_SESSION['userId'])) {
-        $_SESSION['redirect'] = $route->getPattern();
-        $app->redirect("/login");
-    };
-};
+require_once __DIR__ . "/../functions.php";
 
 $app->get('/', function () use ($app) {
     if(class_exists("Memcache")) {
