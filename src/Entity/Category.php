@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping;
 
 /**
  * @Entity
- * @Table(name="topics")
+ * @Table(name="categories")
  */
-class Topic
+class Category implements Node
 {
 
     /**
@@ -42,21 +42,15 @@ class Topic
 
     /**
      * @ManyToOne(targetEntity="UserRole")
-     * @JoinColumn(name="roleToChat_id", referencedColumnName="id")
+     * @JoinColumn(name="roleToCreateTopics_id", referencedColumnName="id")
      **/
-    private $roleToChat;
+    private $roleToCreateTopics;
 
     /**
      * @ManyToOne(targetEntity="UserRole")
-     * @JoinColumn(name="roleToView_id", referencedColumnName="id")
+     * @JoinColumn(name="roleToViewTopics_id", referencedColumnName="id")
      **/
-    private $roleToView;
-
-    /**
-     * @ManyToOne(targetEntity="Category")
-     * @JoinColumn(name="category_id", referencedColumnName="id")
-     **/
-    private $category;
+    private $roleToViewTopics;
 
     /**
      * @Column(type="boolean")
@@ -78,6 +72,43 @@ class Topic
         $this->sticky = false;
     }
 
+
+    /**
+     * @Column(type="integer")
+     */
+    private $lft;
+
+    /**
+     * @Column(type="integer")
+     */
+    private $rgt;
+
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getLeftValue()
+    {
+        return $this->lft;
+    }
+
+    public function setLeftValue($lft)
+    {
+        $this->lft = $lft;
+    }
+
+    public function getRightValue()
+    {
+        return $this->rgt;
+    }
+
+    public function setRightValue($rgt)
+    {
+        $this->rgt = $rgt;
+    }
+
     public function getTitle()
     {
         return $this->title;
@@ -86,5 +117,10 @@ class Topic
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }
